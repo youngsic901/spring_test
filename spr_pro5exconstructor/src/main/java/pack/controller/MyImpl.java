@@ -38,6 +38,6 @@ public class MyImpl implements MyInter {
 
     @Override
     public void showResult() {
-        System.out.println("상품 " + product + " : 금액은" + sangpumInter.calcMoney(quantity, price) + "원 입니다.");
+        System.out.println("상품 " + product + " : 금액은 " + sangpumInter.calcMoney(quantity, price) + "원 입니다.");
     }
 }
