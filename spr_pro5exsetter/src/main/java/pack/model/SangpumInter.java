@@ -1,7 +1,7 @@
 package pack.model;
 
 public interface SangpumInter {
-    int calcMoney();
-    void setPrice(int price);
     void setQuantity(int quantity);
+    void setPrice(int price);
+    int calcMoney();
 }

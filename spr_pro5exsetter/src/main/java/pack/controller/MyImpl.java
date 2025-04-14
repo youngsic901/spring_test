@@ -6,9 +6,19 @@ import java.util.Scanner;
 
 public class MyImpl implements MyInter {
     private String product;
+    private int price, quantity;
     private SangpumInter sangpumInter;
 
-    public MyImpl(SangpumInter sangpumInter) {
+    public void setProduct(String product) {
+        this.product = product;
+    }
+    public void setPrice(int price) {
+        this.price = price;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    public void setSangpumInter(SangpumInter sangpumInter) {
         this.sangpumInter = sangpumInter;
     }
 

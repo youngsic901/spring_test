@@ -4,7 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="myImpl" class="pack.controller.MyImpl">
-        <constructor-arg ref="sangpumInter" type="pack.model.SangpumInter"/>
+        <property name="sangpumInter">
+            <bean class="pack.model.SangpumImpl"/>
+        </property>
     </bean>
-    <bean id="sangpumInter" class="pack.model.SangpumImpl"/>
 </beans>
