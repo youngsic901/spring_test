@@ -6,7 +6,7 @@
 
 	<bean id="serviceImpl" class="pack.controller.SelectServiceImpl">
 		<constructor-arg>
-			<ref bean="daoImpl"/>
+			<ref bean="daoImpl" />
 		</constructor-arg>
 	</bean>
 </beans>
