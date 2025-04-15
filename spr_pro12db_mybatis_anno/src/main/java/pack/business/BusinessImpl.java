@@ -12,7 +12,7 @@ import pack.model.SangpumInter;
 @Service
 public class BusinessImpl implements BusinessInter{
 	@Autowired
-	@Qualifier("jikwonImpl")
+	@Qualifier("sangpumImpl")
 	private SangpumInter inter;
 	
 	@Override
