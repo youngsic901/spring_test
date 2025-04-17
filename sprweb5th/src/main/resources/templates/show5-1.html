@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>show5-1</title>
+</head>
+<body>
+<h1>이건 나올까?</h1>
+<div layout:::fragment="content">
+    <table>
+        <tr>
+            <th>번호</th><th>메뉴</th>
+        </tr>
+        <tr>
+            <td>1</td><td>떡볶이</td>
+        </tr>
+        <tr>
+            <td>2</td><td>봉골레파스타</td>
+        </tr>
+    </table>
+    <img th:src="@{/images/my.jpg}" alt="my image" title="안녕" />
+</div>
+
+<div th:replace="~{layouts/footer :: badak}"></div>
+</body>
+</html>
