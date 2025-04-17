@@ -35,7 +35,7 @@ public class DataImpl implements DataInterface{
 		return list;
 	}
 	
-	public List findAll(EntityManager em, Class cla) {
+	public<T> List<T> findAll(EntityManager em, Class cla) {
 		// JPQL
 		return em.createQuery("select e from " + cla.getName() + " e", cla).getResultList();
 	}
