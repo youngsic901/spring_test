@@ -13,6 +13,12 @@ target/
 .springBeans
 .sts4-cache
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
 ### Eclipse ###
 .metadata
 bin/
@@ -25,12 +31,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
 ### NetBeans ###
 /nbproject/private/
