@@ -46,7 +46,7 @@ public class TestController {
     }
 
     @GetMapping("ex3")
-    public String abc3() {
+    public String abc3(Model model) {
         List<DataDto> list = new ArrayList<>();
 
         for(int i = 1; i <= 3; i++) {
@@ -57,9 +57,7 @@ public class TestController {
             dto.setRegDate(LocalDate.now());
             list.add(dto);
         }
-
-        ModelAndView andView = new ModelAndView("show3");
-        andView.addObject("dtos", list);
+        model.addAttribute("dtos", list);
 
         return "show3";
     }
