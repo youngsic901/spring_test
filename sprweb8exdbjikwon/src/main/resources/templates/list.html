@@ -9,15 +9,15 @@
     <tr>
         <th>사번</th><th>직원명</th><th>성별</th><th>연봉</th>
     </tr>
-    <th:block th:if="${jikwon.size > 0}">
-        <tr th:each="data: ${jikwon}">
+    <th:block th:if="${jikwons.size > 0}">
+        <tr th:each="data: ${jikwons}">
             <td th:text="${data.jikwonno}"></td>
             <td th:text="${data.jikwonname}"></td>
             <td th:text="${data.jikwongen}"></td>
-            <td th:text="${data.jikwonpay}"></td>
-
+            <td th:text="${data.jikwonpay   }"></td>
         </tr>
     </th:block>
 </table>
+<span th:text="|총 ${jikwons.size} 명|"></span>
 </body>
 </html>

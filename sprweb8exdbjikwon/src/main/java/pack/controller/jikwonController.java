@@ -1,4 +1,4 @@
-package pack;
+package pack.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +15,10 @@ public class jikwonController {
     @Autowired
     private jikwonDao jikwonDao;
 
-    @GetMapping("moveController")
+    @GetMapping("jikwon")
     public String listProcess(Model model, @RequestParam("jikwonjik") String jikwonjik) {
         ArrayList<jikwonDto> list = jikwonDao.getJikwonData(jikwonjik);   // 모델 호출
-        model.addAttribute("jikwon", list);
+        model.addAttribute("jikwons", list);
         return "list";
     }
 }
