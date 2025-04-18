@@ -16,7 +16,7 @@ public class jikwonController {
     private jikwonDao jikwonDao;
 
     @GetMapping("moveController")
-    public String listProcess(Model model, @RequestParam String jikwonjik) {
+    public String listProcess(Model model, @RequestParam("jikwonjik") String jikwonjik) {
         ArrayList<jikwonDto> list = jikwonDao.getJikwonData(jikwonjik);   // 모델 호출
         model.addAttribute("jikwon", list);
         return "list";
