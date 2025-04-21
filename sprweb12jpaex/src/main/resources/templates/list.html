@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:if="${jikwons.size <= 0}">
+    <script>
+        alert("검색조건을 다시 확인해 주세요");
+        window.location.href = "http://localhost:80/";
+    </script>
+</th:block>
+<table border="1">
+    <tr>
+        <th>사번</th><th>직원명</th><th>성별</th><th>연봉</th>
+    </tr>
+    <th:block th:if="${jikwons.size > 0}">
+        <tr th:each="data: ${jikwons}">
+            <td th:text="${data.jikwonno}"></td>
+            <td th:text="${data.jikwonname}"></td>
+            <td th:text="${data.jikwongen}"></td>
+            <td th:text="${#numbers.formatInteger(data.jikwonpay, 3, 'COMMA')} + 만원"></td>
+        </tr>
+    </th:block>
+</table>
+<span th:text="|인원수 : ${jikwons.size} 명|"></span>
+</body>
+</html>

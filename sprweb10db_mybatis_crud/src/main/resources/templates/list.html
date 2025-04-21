@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>회원 목록(@MVC = MyBatis Annotation)</h2>
-<th:block th:if="${datas.size > 0}">
+<th:block th:if="${datas.size > 0}"> <!-- request.getAttribute -->
 <a th:href="@{/insert}" th:text="추가"></a>
     <table border="1">
         <tr>
