@@ -1,0 +1,28 @@
+.board-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.board-item {
+    border: 1px solid #dee2e6;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.board-title a {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #212529;
+}
+
+.board-title a:hover {
+    color: #0d6efd;
+}
+
+.board-meta {
+    font-size: 14px;
+    color: #6c757d;
+}
