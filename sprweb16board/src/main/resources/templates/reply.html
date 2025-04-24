@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+
+    <script type="text/javascript">
+        window.onload = function () {
+            document.querySelector("#btnReply").onclick = chk;
+        }
+
+        function chk() {
+            if(refrm.name.value === "") {
+                refrm.name.focus();
+                alert("작성자를 입력하시오");
+                return;
+            }
+            // 나머지는 생략 ...
+
+            refrm.submit();
+        }
+    </script>
+</head>
+<body>
+<h3>* 댓글 쓰기 *</h3>
+<th:block th:if="${data != null}">
+    <form th:action="@{reply}" name="refrm" method="post" th:object="${data}">
+        <input type="hidden" th:field="*{num}">
+        <input type="hidden" th:field="*{gnum}">
+        <input type="hidden" th:field="*{onum}">
+        <input type="hidden" th:field="*{nested}">
+        <input type="hidden" name="page" th:value="${page}">
+
+        <table class="table">
+            <tr>
+                <td><label for="name">이름</label></td>
+                <td><input type="text" name="name" id="name"></td>
+            </tr>
+            <tr>
+                <td><label for="pass">암호</label></td>
+                <td><input type="text" name="pass" id="pass"></td>
+            </tr>
+            <tr>
+                <td><label for="mail">이메일</label></td>
+                <td><input type="text" name="mail" id="mail"></td>
+            </tr>
+            <tr>
+                <td><label for="title">제목</label></td>
+                <td>
+                    <!--<input type="text" style="width: 99%" name="title" id="title" th:value="*{title}">-->
+                    <input type="text" style="width: 99%" name="title" id="title" th:value="|[RE]:*{#strings.length(title) > 4 ? #strings.substring(title,0,4) : title}|">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="cont">내용</label></td>
+                <td><textarea rows="5" style="width: 99%" name="cont" id="cont"></textarea></td>
+            </tr>
+            <tr>
+               <td colspan="2" style="text-align: center;">
+                   <input type="button" value="완료" id="btnReply">
+                   <input type="button" value="목록" th:onclick="|location.href='@{list(page=${page})}'|">
+               </td>
+            </tr>
+        </table>
+    </form>
+</th:block>
+</body>
+</html>
