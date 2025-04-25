@@ -23,7 +23,7 @@ public class BuserBean {
     같은 이유로 FormBean과 Entity도 분리해야 한다.
    
      */
-    // BuserBean을 Buser 엔티티로 변환하는 메소드
+    // BuserBean을 Buser 엔티티로 변환하는 메소드(BuilderPattern)
     public Buser toEntity() {
         return Buser.builder()
                 .buserno(this.buserno)

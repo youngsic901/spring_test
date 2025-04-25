@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<form th:action="@{/list}" method="post" name="frm">
+	고객 출력 : <input type="radio" name="gogekgen" value="전체">전체&nbsp;
+	<input type="radio" name="gogekgen" value="남">남&nbsp;
+	<input type="radio" name="gogekgen" value="여">여&nbsp;
+	<br>
+	<input type="submit" value="제출">
+</form>
+<table border="1">
+	<tr>
+		<th>고객번호</th><th>고객명</th><th>전화</th><th>성별</th><th>나이</th>
+	</tr>
+	<th:block th:if="${datas != null}">
+		<tr th:each="data : ${datas}">
+			<td th:text="${data.gogekno}"></td>
+			<td th:text="${data.gogekname}"></td>
+			<td th:text="${data.gogektel}"></td>
+			<td th:text="${data.gogekgen}"></td>
+			<td th:text="${data.gogekage}"></td>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>
