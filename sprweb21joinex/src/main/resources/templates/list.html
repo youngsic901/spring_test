@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<h3>직원자료 출력</h3>
+<table border="1">
+	<tr>
+		<th>사번</th><th>이름</th><th>직급</th><th>부서명</th><th>관리고객</th>
+	</tr>
+	<th:block th:if="${lists.size() > 0}">
+		<tr th:each="list: ${lists}">
+			<td th:text="${list.jikwonno}"></td>
+			<th:block th:if="${list.gogekDtos.size() <= 0}">
+				<td th:text="${list.jikwonname}"></td>
+			</th:block>
+			<th:block th:if="${list.gogekDtos.size() > 0}">
+				<td><a th:href="|/gogek?jikwonno=${list.jikwonno}&jikwonname=${list.jikwonname}|" th:text="${list.jikwonname}"></a></td>
+			</th:block>
+			<td th:text="${list.jikwonjik}"></td>
+			<td th:text="${list.buserDto.busername}"></td>
+			<!--<td th:text="${list.gogekDtos[0].gogekname}"></td>-->
+			<th:block th:if="${list.gogekDtos.size() > 0}">
+				<td>X</td>
+			</th:block>
+			<th:block th:if="${list.gogekDtos.size() <= 0}">
+				<td>O</td>
+			</th:block>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>

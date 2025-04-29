@@ -21,6 +21,6 @@ public class Buser {
     private String busertel;
 
     @OneToMany(mappedBy = "buser", fetch = FetchType.LAZY) // Jikwon 엔티티의 Buser buser 필드를 기준으로 매핑관계가 됨을 나타냄
-    // mappedBy = "buser" 는 주인이 아님을 나타냄, 즉, 주인은 Jikwon 엔티티가 된다.
+    // mappedBy = "buser" 는 주인이 아님을 나타냄, 즉, 주인은 Jikwon 엔티티가 된다.(master, slave관계)
     private List<Jikwon> jikwonList; // Jikwon 엔티티들의 리스트
 }

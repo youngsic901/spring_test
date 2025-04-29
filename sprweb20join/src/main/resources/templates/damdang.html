@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<h2>고객 담당 직원</h2>
+<a th:href="|javascript:history.back()|">이전</a>
+<div th:each="info : ${dlist}">
+	<span th:text="${info}">
+
+	</span>
+</div>
+</body>
+</html>
