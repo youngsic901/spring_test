@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript">
+		function func(gogekno, gogekname) {
+			document.getElementById("showData").innerHTML ="";
+
+			fetch("gogeklogin", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					gogekno: gogekno,
+					gogekname: gogekname
+				})
+			})
+			.then(response => {
+				if (!response.ok) throw new Error("response was not ok");
+				return response.json();
+			})
+			.then(jikwondatas => {
+				const dto = jikwondatas.datas;
+				// let str = `${dto.jikwonno} + ${dto.jikwonname} + ${dto.jikwonjik} + ${dto.buser.busername}`;
+				let str = `<hr>`;
+				str += `<span>직원명 : ${dto.jikwonno} 직급 : ${dto.jikwonjik} 부서명 : ${dto.buser.busername} 부서전화 : ${dto.buser.busertel}</span>`;
+				document.getElementById("showData").innerHTML = str;
+			})
+		}
+	</script>
+</head>
+<body>
+<h3>관리고객 찾기</h3>
+고객번호 : <input type="number" name="gogekno" id="gogekno"><br>
+고객명 : <input type="text" name="gogekname" id="gogekname"><br>
+<button th:onclick="|javascript:func(gogekno.value, gogekname.value)|">확인</button>
+<div id="showData">
+</div>
+</body>
+</html>

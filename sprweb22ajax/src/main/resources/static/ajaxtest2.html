@@ -3,21 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 	<script type="text/javascript">
 		window.onload = function () {
             document.querySelector("#btnSingle").addEventListener("click", function () {
                 // alert("a");
 				document.querySelector("#showData").innerHTML = "";
 
-                fetch("list?name=oscar") // Promise 객체가 내부적으로 활동
-					.then(response => response.json()) // Ajax 요청 결과가 성공한 경우 실행되는 함수
-					.then(data => {
+                axios.get("list",{
+                    params: {
+                        "name":"james"
+                    }
+				}) // Promise 객체가 내부적으로 활동
+					.then(function (response){
+                        const data = response.data; // json 객체 변환이 내부적으로 이루어짐
                         let str = data.name + "<br>";
                         str += data.skills[0] + " ";
                         str += data.skills[1];
                         document.querySelector("#showData").innerHTML = str;
 					})
-					.catch(() => { // Ajax 요청 결과가 실패한 경우 실행되는 함수
+					.catch(function () {
                     	document.querySelector("#showData").innerHTML = "<b>에러 발생</b>";
                     });
 			});
@@ -25,13 +31,11 @@
             document.querySelector("#btnMulti").addEventListener("click", function () {
                 document.querySelector("#showData").innerHTML = "";
 
-                fetch("list2")
-					.then(response => response.json())
-					.then(data => {
+                axios.get("list2")
+					.then(response => {
                         let str = "<table>";
-                        let list = data.datas;
-                        console.log(list.length);
-						list.forEach(function (objArr){
+                        let list = response.data.datas;
+                        list.forEach(function(objArr) {
                             str += "<tr>";
                             str += "<td>" + objArr["name"] + "</td>";
                             str += "<td>" + objArr["age"] + "</td>";
@@ -40,12 +44,21 @@
                         str += "</table>";
 
                         document.querySelector("#showData").innerHTML = str;
-                    })
+					})
                     .catch(() => { // Ajax 요청 결과가 실패한 경우 실행되는 함수
                         document.querySelector("#showData").innerHTML = "<b>에러 발생</b>";
                     });
 			});
         }
+
+        /*
+        axios 응답
+        response
+        	|- data	<- 서버가 보낸 JSON 본문. response.data는 고정, 변경 불가
+        	|    |-datas <- JSON 안의 "datas"키
+        	|- status
+        	|- headers
+        * */
 	</script>
 </head>
 <body>
