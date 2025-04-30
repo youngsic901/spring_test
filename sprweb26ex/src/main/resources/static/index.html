@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript">
+		window.onload = function () {
+			document.querySelector("#jikwonfrm").onsubmit = findGogek;
+		}
+
+		function findGogek(event) {
+			event.preventDefault();
+
+			const jikwonno = document.querySelector("#jikwonno").value;
+			const jikwonname = document.querySelector("#jikwonname").value;
+			const bodyContent = JSON.stringify({"jikwonno": jikwonno, "jikwonname": jikwonname});
+
+			console.log(bodyContent);
+			console.log(typeof bodyContent);
+			fetch(`/findGogek`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: bodyContent
+			})
+			.then(response => {
+				if(!response.ok) {
+					throw new Error("response err : 입력값을 확인 바랍니다.");
+				}
+				return response.json();
+			})
+			.then(gogekdatas => {
+				let count = 0;
+				let str = `<table border="1">`;
+				str += `<tr><th>고객번호</th><th>고객명</th><th>고객전화</th></tr>`;
+				const glist = gogekdatas.datas.gogekDtos;
+				glist.forEach(object => {
+					str += `<tr>`;
+					str += `<td>` + object.gogekno + `</td>`;
+					str += `<td>` + object.gogekname + `</td>`;
+					str += `<td>` + object.gogektel + `</td>`;
+					str += `</tr>`;
+					count++;
+				})
+				str += `<tr><td colspan="3">인원수 : ${count}</td></tr>`;
+				str += `</table>`;
+				document.querySelector("#result").innerHTML = str;
+			})
+			.catch(() => {
+				let str = `<table border="1">`;
+				str += `<tr><th>고객번호</th><th>고객명</th><th>고객전화</th></tr>`;
+				str += `<tr><td colspan="3">담당 고객이나 직원이 없습니다.</td></tr>`;
+				str += `</table>`;
+				document.querySelector("#result").innerHTML = str;
+			})
+		}
+	</script>
+</head>
+<body>
+<h3>담당 고객 찾기</h3>
+<form id="jikwonfrm">
+	직원번호 : <input type="text" name="jikwonno" id="jikwonno">
+	직원명 : <input type="text" name="jikwonname" id="jikwonname">
+	<button type="submit">확인</button>
+</form>
+<hr>
+<div id="result"></div>
+</body>
+</html>

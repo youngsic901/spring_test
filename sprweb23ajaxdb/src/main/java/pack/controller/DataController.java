@@ -30,7 +30,7 @@ public class DataController {
 
     @GetMapping("jikwonlist")
     @ResponseBody
-    public Map<String, Object> xJikwonProcess(@RequestParam("buserno")int buserno) {
+    public Map<String, Object> JikwonProcess(@RequestParam("buserno")int buserno) {
         System.out.println("buserno = " + buserno);
         List<JikwonDto> list = dataDao.jikwonList(buserno);
 
