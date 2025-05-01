@@ -24,7 +24,7 @@ public class DataController {
 
         JikwonDto jikwonDto = jikwonDao.findData(jikwonno, jikwonname);
         Map<String, Object> gogekList = new HashMap<>();
-        gogekList.put("datas", jikwonDto);
+        gogekList.put("datas", jikwonDto.getGogekDtos());
         return gogekList;
     }
 }
