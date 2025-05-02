@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!-- 모달창 닫히면 입력값 제거 필요 -->
+	<style>
+		.modal{
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}
+		.modal-content {
+			background-color: #fff;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 50%;
+		}
+
+		.exitModal{
+			float: right;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function () {
+			document.querySelector("#printList").onclick = printList;
+			document.querySelector("#addList").onclick = addList;
+			document.querySelector("#updateList").onclick = updateList;
+			document.querySelector("#deleteList").onclick = deleteList;
+			document.querySelectorAll(".showModal").forEach((element, index) => {
+				element.addEventListener("click", function () {
+					document.querySelectorAll(".modal")[index].style.display = "block";
+				})
+			});
+			document.querySelectorAll(".exitModal").forEach((element, index) => {
+				element.addEventListener("click", function () {
+					document.querySelectorAll(".modal")[index].style.display = "none";
+					document.querySelectorAll("input").forEach((element, index) => {
+						element.value = null;
+					});
+				})
+			});
+			document.querySelector("#showDeleteYN").onclick = function () {
+				document.querySelector(".YNmodal").style.display = "block";
+			};
+			document.querySelector("#exitYNmodal").onclick = function () {
+				document.querySelector(".YNmodal").style.display = "none";
+			}
+			document.querySelectorAll(".modal").forEach((element, index) => {
+				element.onkeydown = function (event) {
+					alert("test");
+					if (event.keyCode === 48) {
+						document.querySelectorAll(".modal")[index].style.display = "none";
+						document.querySelectorAll("input").forEach((element, index) => {
+							element.value = null;
+						});
+					}
+				}
+			})
+		}
+
+		window.onkeydown = function (event) {
+			if (event.key === "Escape") {
+				document.querySelectorAll(".modal").forEach((element, index) => {
+					element.style.display = 'none';
+				});
+				document.querySelectorAll("input").forEach((element, index) => {
+					element.value = null;
+				});
+			}
+		}
+
+		function printList() {
+			const result = document.querySelector("#printResult");
+			fetch("/print", {
+				method: "POST"
+			})
+			.then(response => {
+				if(!response.ok){
+					throw new Error("네트워크 응답 오류");
+				}
+				return response.json();
+			})
+			.then(datas => {
+				displayList(datas);
+			})
+			.catch(error => {
+				console.log("읽기 중 에러 : ", error);
+			})
+		}
+
+		function displayList(datas) {
+			const printResult = document.querySelector("#printResult");
+			printResult.innerHTML = "";
+			const table = document.createElement("table");
+			table.border = "1";
+			table.innerHTML = "<tr><th>상품코드</th><th>상품명</th><th>수량</th><th>단가</th></tr>";
+
+			datas.forEach(data => {
+				const row = document.createElement("tr");
+				const codeCell = document.createElement("td");
+				codeCell.textContent = data.code;
+				const sangCell = document.createElement("td");
+				sangCell.textContent = data.sang;
+				const suCell = document.createElement("td");
+				suCell.textContent = data.su;
+				const danCell = document.createElement("td");
+				danCell.textContent = data.dan;
+
+				row.appendChild(codeCell);
+				row.appendChild(sangCell);
+				row.appendChild(suCell);
+				row.appendChild(danCell);
+				table.appendChild(row);
+			});
+
+			printResult.appendChild(table);
+		}
+
+		function addList() {
+			const codeInput = document.querySelector("#insertCode");
+			const sangInput = document.querySelector("#insertSang");
+			const suInput = document.querySelector("#insertSu");
+			const danInput = document.querySelector("#insertDan");
+
+			const code = codeInput.value;
+			const sang = sangInput.value;
+			const su = suInput.value;
+			const dan = danInput.value;
+
+			fetch("/insert", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({code, sang, su, dan})
+			})
+			.then(response => {
+				if(!response.ok){
+					throw new Error("네트워크 응답 오류");
+				}
+				return response.text();
+			})
+			.then(datas => {
+				document.querySelectorAll(".modal")[0].style.display = "none";
+				codeInput.value = null;
+				sangInput.value = null;
+				suInput.value = null;
+				danInput.value = null;
+				printList();
+			})
+			.catch(error => {
+				console.log("읽기 중 에러 : ", error);
+			})
+		}
+
+		function updateList() {
+			const codeInput = document.querySelector("#updateCode");
+			const sangInput = document.querySelector("#updateSang");
+			const suInput = document.querySelector("#updateSu");
+			const danInput = document.querySelector("#updateDan");
+
+			let code = codeInput.value;
+			let sang = sangInput.value;
+			let su = suInput.value;
+			let dan = danInput.value;
+
+			fetch("/update", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({code, sang, su, dan})
+			})
+			.then(response => {
+				if(!response.ok){
+					throw new Error("네트워크 응답 오류");
+				}
+				return response.text();
+			})
+			.then(datas => {
+				document.querySelectorAll(".modal")[1].style.display = "none";
+				codeInput.value = null;
+				sangInput.value = null;
+				suInput.value = null;
+				danInput.value = null;
+				printList();
+			})
+			.catch(error => {
+				console.log("읽기 중 에러 : ", error);
+			})
+		}
+
+		function deleteList() {
+			const code = document.querySelector("#deleteCode").value;
+
+			fetch(`/delete/${code}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: code
+			})
+			.then(response => {
+				if(!response.ok){
+					throw new Error("네트워크 응답 오류");
+				}
+				return response.text();
+			})
+			.then(datas => {
+				document.querySelectorAll(".modal")[2].style.display = "none";
+				document.querySelectorAll(".modal")[3].style.display = "none";
+				printList();
+			})
+			.catch(error => {
+				console.log("읽기 중 에러 : ", error);
+			})
+		}
+	</script>
+</head>
+<body>
+<div>
+	<button id="printList">목록</button>
+	<button id="showAddModal" class="showModal">추가</button>
+	<button id="showUpdateModal" class="showModal">수정</button>
+	<button id="showDeleteModal" class="showModal">삭제</button>
+</div>
+<br>
+<div id="printResult">
+
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		상품 추가<br>
+		<table>
+			<tr>
+				<td>상품코드 : </td>
+				<td><input type="text" id="insertCode"></td>
+			</tr>
+			<tr>
+				<td>상품명 : </td>
+				<td><input type="text" id="insertSang"></td>
+			</tr>
+			<tr>
+				<td>수량 : </td>
+				<td><input type="text" id="insertSu"></td>
+			</tr>
+			<tr>
+				<td>단가 : </td>
+				<td><input type="text" id="insertDan"></td>
+			</tr>
+		</table>
+		<button id="addList">추가</button>
+	</div>
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		상품 수정<br>
+		<table>
+			<tr>
+				<td>상품코드 : </td>
+				<td><input type="text" id="updateCode"></td>
+			</tr>
+			<tr>
+				<td>상품명 : </td>
+				<td><input type="text" id="updateSang"></td>
+			</tr>
+			<tr>
+				<td>수량 : </td>
+				<td><input type="text" id="updateSu"></td>
+			</tr>
+			<tr>
+				<td>단가 : </td>
+				<td><input type="text" id="updateDan"></td>
+			</tr>
+		</table>
+		<button id="updateList">수정</button>
+	</div>
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		상품 삭제<br>
+		상품코드 : <input type="text" id="deleteCode">
+		<button id="showDeleteYN">삭제</button>
+	</div>
+</div>
+
+<div class="modal YNmodal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		정말 삭제하시겠습니까?
+		<button id="deleteList">예</button>
+		<button id="exitYNmodal">아니오</button>
+	</div>
+</div>
+</body>
+</html>

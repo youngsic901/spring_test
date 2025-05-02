@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript">
+		window.onload = function () {
+			document.querySelector("#fetchMembers").onclick = fetchMembers;
+			document.querySelector("#editMember").onclick = editMember;
+		}
+
+		function fetchMembers(){
+			fetch("/api/members", {
+				method: "GET"
+			})
+			.then(response => {
+				if(!response.ok){
+					throw new Error("네트워크 응답 오류");
+				}
+				return response.json();
+			})
+			.then(members => {
+				displayMembers(members);
+			})
+			.catch(error => {
+				console.log("읽기 중 에러 : ", error);
+			})
+		}
+		function displayMembers(members){
+			const tableBody = document.getElementById("tableBody");
+			tableBody.innerHTML = ""; // 초기화
+
+			members.forEach(member => {
+				const row = document.createElement("tr"); // DOM 사용
+				// row.innerHTML = `
+				// <td>${member.num}</td>
+				// <td>${member.name}</td>
+				// <td>${member.addr}</td>
+				// <td><a href="#" onclick="editMember(${member.num})">수정</a></td>
+				// <td><a href="#" onclick="deleteMember(${member.num})">삭제</a></td>`;
+				// tableBody.appendChild(row);
+
+				// dom 객체를 활용해서 row의 값을 구성
+				const numCell = document.createElement("td");
+				numCell.textContent = member.num;
+				const nameCell = document.createElement("td");
+				nameCell.textContent = member.name;
+				const addrCell = document.createElement("td");
+				addrCell.textContent = member.addr;
+				const editCell = document.createElement("td");
+				const editLink = document.createElement("a");
+				editLink.href = "#";
+				editLink.textContent = "수정";
+				editLink.addEventListener("click", (event) => {
+					event.preventDefault();
+					editMember(member.num);
+				});
+				editCell.appendChild(editLink);
+				const deleteCell = document.createElement("td");
+				const deleteLink = document.createElement("a");
+				deleteLink.href = "#";
+				deleteLink.textContent = "삭제";
+				deleteLink.addEventListener("click", (event) => {
+					event.preventDefault();
+					deleteMember(member.num);
+				});
+				deleteCell.appendChild(deleteLink);
+
+				row.appendChild(numCell);
+				row.appendChild(nameCell);
+				row.appendChild(addrCell);
+				row.appendChild(editCell);
+				row.appendChild(deleteCell);
+				tableBody.appendChild(row);
+			});
+		}
+		function editMember(num){
+			location.href = `/members/update/${num}`; // 수정 페이지(update.html)로 이동
+		}
+
+		function deleteMember(num){
+			if(confirm("정말 삭제할까요?")) {
+				fetch(`/api/members/${num}`, {
+					method: "DELETE"
+				})
+				.then(response => {
+					if(!response.ok){
+						throw new Error("네트워크 응답 오류");
+					}
+					fetchMembers(); // 삭제 후 목록 보기
+				})
+				.then(members => {
+					displayMembers(members);
+				})
+				.catch(error => {
+					console.log("읽기 중 에러 : ", error);
+				})
+			}
+		}
+	</script>
+</head>
+<body>
+<h3>* 회원 정보 *</h3>
+<a th:href="@{/}">메인으로</a><br>
+<a th:href="@{/members/new}">회원 추가</a>
+<br>
+<button id="fetchMembers">회원 읽기</button>
+<br><br>
+<table border="1">
+	<thead>
+	<tr>
+		<th>번호</th><th>이름</th><th>주소</th><th>수정</th><th>삭제</th>
+	</tr>
+	</thead>
+	<tbody id="tableBody">
+	<!-- 회원자료 표시 위치 -->
+
+	</tbody>
+</table>
+</body>
+</html>
