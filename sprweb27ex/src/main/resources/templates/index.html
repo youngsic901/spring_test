@@ -54,17 +54,17 @@
 			document.querySelector("#exitYNmodal").onclick = function () {
 				document.querySelector(".YNmodal").style.display = "none";
 			}
-			document.querySelectorAll(".modal").forEach((element, index) => {
-				element.onkeydown = function (event) {
-					alert("test");
-					if (event.keyCode === 48) {
-						document.querySelectorAll(".modal")[index].style.display = "none";
-						document.querySelectorAll("input").forEach((element, index) => {
-							element.value = null;
-						});
-					}
-				}
-			})
+			// document.querySelectorAll(".modal").forEach((element, index) => {
+			// 	element.onkeydown = function (event) {
+			// 		alert("test");
+			// 		if (event.keyCode === 48) {
+			// 			document.querySelectorAll(".modal")[index].style.display = "none";
+			// 			document.querySelectorAll("input").forEach((element, index) => {
+			// 				element.value = null;
+			// 			});
+			// 		}
+			// 	}
+			// })
 		}
 
 		window.onkeydown = function (event) {
