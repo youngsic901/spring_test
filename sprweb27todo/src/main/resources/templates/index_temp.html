@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body>
+<div id="container">
+	<div>
+		<button id="printList">목록</button>
+		<button id="showAddModal" class="showModal">추가</button>
+		<button id="showUpdateModal" class="showModal">수정</button>
+		<button id="showDeleteModal" class="showModal">삭제</button>
+	</div>
+	<br>
+	<div id="printResult">
+</div>
+
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		항목 추가<br>
+		<table>
+			<tr>
+				<td><label for="insertTitle">이름 : </label></td>
+				<td><input type="text" id="insertTitle"></td>
+			</tr>
+			<tr>
+				<td><label for="insertOrder">수량 : </label></td>
+				<td><input type="text" id="insertOrder"></td>
+			</tr>
+			<tr>
+				<td><label for="insertCompleted">여/부 : </label></td>
+				<td>
+					<select id="insertCompleted">
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<button id="addList">추가</button>
+	</div>
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		항목 수정<br>
+		<table>
+			<tr>
+				<td><label for="updateId">아이디 : </label></td>
+				<td><input type="text" id="updateId"></td>
+			</tr>
+			<tr>
+				<td><label for="updateTitle">상품명 : </label></td>
+				<td><input type="text" id="updateTitle"></td>
+			</tr>
+			<tr>
+				<td><label for="updateOrder">수량 : </label></td>
+				<td><input type="text" id="updateOrder"></td>
+			</tr>
+			<tr>
+				<td><label for="updateCompleted">여/부 : </label></td>
+				<td>
+					<select id="updateCompleted">
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<button id="updateList">수정</button>
+	</div>
+</div>
+
+<div class="modal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		항목 삭제<br>
+		<label for="deleteId">아이디 : </label>
+		<input type="text" id="deleteId">
+		<button id="showDeleteYN">삭제</button>
+	</div>
+</div>
+
+<div class="modal YNmodal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		정말 삭제하시겠습니까?
+		<button id="deleteList">예</button>
+		<button id="exitYNmodal">아니오</button>
+	</div>
+</div>
+<div class="modal warningmodal">
+	<div class="modal-content">
+		<button class="exitModal">X</button>
+		입력값 확인 바랍니다.
+	</div>
+</div>
+</body>
+</html>

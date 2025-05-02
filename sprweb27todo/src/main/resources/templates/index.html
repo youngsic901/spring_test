@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style_bootstrap.css">
+	<script type="text/javascript" src="/js/script_bootstrap.js"></script>
+</head>
+<body class="container py-4">
+<div class="mb-3">
+	<button id="printList" class="btn btn-outline-primary me-2">목록</button>
+	<button id="showAddModal" class="btn btn-outline-success showModal me-2">추가</button>
+	<button id="showUpdateModal" class="btn btn-outline-warning showModal me-2">수정</button>
+	<button id="showDeleteModal" class="btn btn-outline-danger showModal">삭제</button>
+</div>
+
+<div id="printResult" class="mb-4"></div>
+
+<!-- 추가 모달 -->
+<div class="modal">
+	<div class="modal-content p-4 bg-light rounded shadow">
+		<button class="btn-close exitModal float-end"></button>
+		<h5>항목 추가</h5>
+		<div class="mb-3">
+			<label for="insertTitle" class="form-label">할 일</label>
+			<input type="text" id="insertTitle" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="insertOrder" class="form-label">순서</label>
+			<input type="text" id="insertOrder" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="insertCompleted" class="form-label">진행 여부</label>
+			<select id="insertCompleted" class="form-select">
+				<option value="true">진행완료</option>
+				<option value="false">진행중</option>
+			</select>
+		</div>
+		<button id="addList" class="btn btn-success">추가</button>
+	</div>
+</div>
+
+<!-- 수정 모달 -->
+<div class="modal">
+	<div class="modal-content p-4 bg-light rounded shadow">
+		<button class="btn-close exitModal float-end"></button>
+		<h5>항목 수정</h5>
+		<div class="mb-3">
+			<label for="updateId" class="form-label">관리번호</label>
+			<input type="text" id="updateId" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="updateTitle" class="form-label">할 일</label>
+			<input type="text" id="updateTitle" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="updateOrder" class="form-label">순서</label>
+			<input type="text" id="updateOrder" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="updateCompleted" class="form-label">진행 여부</label>
+			<select id="updateCompleted" class="form-select">
+				<option value="true">진행완료</option>
+				<option value="false">진행중</option>
+			</select>
+		</div>
+		<button id="updateList" class="btn btn-warning">수정</button>
+	</div>
+</div>
+
+<!-- 삭제 모달 -->
+<div class="modal">
+	<div class="modal-content p-4 bg-light rounded shadow">
+		<button class="btn-close exitModal float-end"></button>
+		<h5>항목 삭제</h5>
+		<div class="mb-3">
+			<label for="deleteId" class="form-label">관리번호</label>
+			<input type="text" id="deleteId" class="form-control">
+		</div>
+		<button id="showDeleteYN" class="btn btn-danger">삭제</button>
+	</div>
+</div>
+
+<!-- 삭제 확인 모달 -->
+<div class="modal YNmodal">
+	<div class="modal-content p-4 bg-light rounded shadow">
+		<button class="btn-close exitModal float-end"></button>
+		<h5>정말 삭제하시겠습니까?</h5>
+
+		<div class="d-flex justify-content-center gap-3">
+			<button id="deleteList" class="btn btn-danger w-25">예</button>
+<!--			<div class="flex-grow-1"></div>-->
+			<button id="exitYNmodal" class="btn btn-secondary w-25">아니오</button>
+		</div>
+	</div>
+</div>
+
+<!-- 경고 모달 -->
+<div class="modal warningmodal">
+	<div class="modal-content p-4 bg-warning rounded shadow">
+		<button class="btn-close exitModal float-end"></button>
+		<p class="fw-bold">입력값 확인 바랍니다.</p>
+	</div>
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
@@ -43,7 +43,7 @@
 			document.querySelectorAll(".exitModal").forEach((element, index) => {
 				element.addEventListener("click", function () {
 					document.querySelectorAll(".modal")[index].style.display = "none";
-					document.querySelectorAll("input").forEach((element, index) => {
+					document.querySelectorAll("input").forEach((element) => {
 						element.value = null;
 					});
 				})
@@ -69,17 +69,16 @@
 
 		window.onkeydown = function (event) {
 			if (event.key === "Escape") {
-				document.querySelectorAll(".modal").forEach((element, index) => {
+				document.querySelectorAll(".modal").forEach((element) => {
 					element.style.display = 'none';
 				});
-				document.querySelectorAll("input").forEach((element, index) => {
+				document.querySelectorAll("input").forEach((element) => {
 					element.value = null;
 				});
 			}
 		}
 
 		function printList() {
-			const result = document.querySelector("#printResult");
 			fetch("/print", {
 				method: "POST"
 			})
@@ -107,18 +106,18 @@
 			datas.forEach(data => {
 				const row = document.createElement("tr");
 				const codeCell = document.createElement("td");
-				codeCell.textContent = data.code;
-				const sangCell = document.createElement("td");
-				sangCell.textContent = data.sang;
-				const suCell = document.createElement("td");
-				suCell.textContent = data.su;
-				const danCell = document.createElement("td");
-				danCell.textContent = data.dan;
+				codeCell.textContent = data.id;
+				const titleCell = document.createElement("td");
+				titleCell.textContent = data.title;
+				const orderCell = document.createElement("td");
+				orderCell.textContent = data.order;
+				const completedCell = document.createElement("td");
+				completedCell.textContent = data.completed;
 
 				row.appendChild(codeCell);
-				row.appendChild(sangCell);
-				row.appendChild(suCell);
-				row.appendChild(danCell);
+				row.appendChild(titleCell);
+				row.appendChild(orderCell);
+				row.appendChild(completedCell);
 				table.appendChild(row);
 			});
 
@@ -126,22 +125,22 @@
 		}
 
 		function addList() {
-			const codeInput = document.querySelector("#insertCode");
-			const sangInput = document.querySelector("#insertSang");
-			const suInput = document.querySelector("#insertSu");
-			const danInput = document.querySelector("#insertDan");
+			const idInput = document.querySelector("#insertCode");
+			const titleInput = document.querySelector("#insertSang");
+			const orderInput = document.querySelector("#insertSu");
+			const completedInput = document.querySelector("#insertDan");
 
-			const code = codeInput.value;
-			const sang = sangInput.value;
-			const su = suInput.value;
-			const dan = danInput.value;
+			const id = idInput.value;
+			const title = titleInput.value;
+			const order = orderInput.value;
+			const completed = completedInput.value;
 
 			fetch("/insert", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({code, sang, su, dan})
+				body: JSON.stringify({id, title, order, completed})
 			})
 			.then(response => {
 				if(!response.ok){
@@ -149,12 +148,12 @@
 				}
 				return response.text();
 			})
-			.then(datas => {
+			.then(() => {
 				document.querySelectorAll(".modal")[0].style.display = "none";
-				codeInput.value = null;
-				sangInput.value = null;
-				suInput.value = null;
-				danInput.value = null;
+				idInput.value = null;
+				titleInput.value = null;
+				orderInput.value = null;
+				completedInput.value = null;
 				printList();
 			})
 			.catch(error => {
@@ -163,22 +162,22 @@
 		}
 
 		function updateList() {
-			const codeInput = document.querySelector("#updateCode");
-			const sangInput = document.querySelector("#updateSang");
-			const suInput = document.querySelector("#updateSu");
-			const danInput = document.querySelector("#updateDan");
+			const idInput = document.querySelector("#updateCode");
+			const titleInput = document.querySelector("#updateSang");
+			const orderInput = document.querySelector("#updateSu");
+			const completedInput = document.querySelector("#updateDan");
 
-			let code = codeInput.value;
-			let sang = sangInput.value;
-			let su = suInput.value;
-			let dan = danInput.value;
+			let id = idInput.value;
+			let title = titleInput.value;
+			let order = orderInput.value;
+			let completed = completedInput.value;
 
 			fetch("/update", {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({code, sang, su, dan})
+				body: JSON.stringify({id, title, order, completed})
 			})
 			.then(response => {
 				if(!response.ok){
@@ -186,12 +185,12 @@
 				}
 				return response.text();
 			})
-			.then(datas => {
+			.then(() => {
 				document.querySelectorAll(".modal")[1].style.display = "none";
-				codeInput.value = null;
-				sangInput.value = null;
-				suInput.value = null;
-				danInput.value = null;
+				idInput.value = null;
+				titleInput.value = null;
+				orderInput.value = null;
+				completedInput.value = null;
 				printList();
 			})
 			.catch(error => {
@@ -200,14 +199,14 @@
 		}
 
 		function deleteList() {
-			const code = document.querySelector("#deleteCode").value;
+			const id = document.querySelector("#deleteCode").value;
 
-			fetch(`/delete/${code}`, {
+			fetch(`/delete/${id}`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: code
+				body: id
 			})
 			.then(response => {
 				if(!response.ok){
@@ -215,7 +214,7 @@
 				}
 				return response.text();
 			})
-			.then(datas => {
+			.then(() => {
 				document.querySelectorAll(".modal")[2].style.display = "none";
 				document.querySelectorAll(".modal")[3].style.display = "none";
 				printList();
