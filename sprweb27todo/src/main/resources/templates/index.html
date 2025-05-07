@@ -18,76 +18,81 @@
 <div id="printResult" class="mb-4"></div>
 
 <!-- 추가 모달 -->
-<div class="modal">
+<div class="modal addModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle" tabindex="-1">
 	<div class="modal-content p-4 bg-light rounded shadow">
-		<button class="btn-close exitModal float-end"></button>
-		<h5>항목 추가</h5>
-		<div class="mb-3">
-			<label for="insertTitle" class="form-label">할 일</label>
-			<input type="text" id="insertTitle" class="form-control">
-		</div>
-		<div class="mb-3">
-			<label for="insertOrder" class="form-label">순서</label>
-			<input type="text" id="insertOrder" class="form-control">
-		</div>
-		<div class="mb-3">
-			<label for="insertCompleted" class="form-label">진행 여부</label>
-			<select id="insertCompleted" class="form-select">
-				<option value="true">진행완료</option>
-				<option value="false">진행중</option>
-			</select>
-		</div>
-		<button id="addList" class="btn btn-success">추가</button>
+		<button class="btn-close exitModal float-end" aria-label="모달 닫기"></button>
+		<h5 id="addModalTitle" class="mb-3">항목 추가</h5>
+		<form id="addForm">
+			<div class="mb-3">
+				<label for="insertTitle" class="form-label">할 일</label>
+				<input type="text" id="insertTitle" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="insertOrder" class="form-label">순서</label>
+				<input type="text" id="insertOrder" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="insertCompleted" class="form-label">진행 여부</label>
+				<select id="insertCompleted" class="form-select">
+					<option value="true">진행완료</option>
+					<option value="false">진행중</option>
+				</select>
+			</div>
+			<button id="addList" class="btn btn-success">추가</button>
+		</form>
 	</div>
 </div>
 
 <!-- 수정 모달 -->
-<div class="modal">
+<div class="modal editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle" tabindex="-1">
 	<div class="modal-content p-4 bg-light rounded shadow">
-		<button class="btn-close exitModal float-end"></button>
-		<h5>항목 수정</h5>
-		<div class="mb-3">
-			<label for="updateId" class="form-label">관리번호</label>
-			<input type="text" id="updateId" class="form-control">
-		</div>
-		<div class="mb-3">
-			<label for="updateTitle" class="form-label">할 일</label>
-			<input type="text" id="updateTitle" class="form-control">
-		</div>
-		<div class="mb-3">
-			<label for="updateOrder" class="form-label">순서</label>
-			<input type="text" id="updateOrder" class="form-control">
-		</div>
-		<div class="mb-3">
-			<label for="updateCompleted" class="form-label">진행 여부</label>
-			<select id="updateCompleted" class="form-select">
-				<option value="true">진행완료</option>
-				<option value="false">진행중</option>
-			</select>
-		</div>
-		<button id="updateList" class="btn btn-warning">수정</button>
+		<button class="btn-close exitModal float-end" aria-label="모달 닫기"></button>
+		<h5 id="editModalTitle" class="mb-3">항목 수정</h5>
+		<form id="editForm">
+			<div class="mb-3">
+				<label for="updateId" class="form-label">관리번호</label>
+				<input type="text" id="updateId" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="updateTitle" class="form-label">할 일</label>
+				<input type="text" id="updateTitle" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="updateOrder" class="form-label">순서</label>
+				<input type="text" id="updateOrder" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="updateCompleted" class="form-label">진행 여부</label>
+				<select id="updateCompleted" class="form-select">
+					<option value="true">진행완료</option>
+					<option value="false">진행중</option>
+				</select>
+			</div>
+			<button id="updateList" class="btn btn-warning">수정</button>
+		</form>
 	</div>
 </div>
 
 <!-- 삭제 모달 -->
-<div class="modal">
+<div class="modal deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" tabindex="-1">
 	<div class="modal-content p-4 bg-light rounded shadow">
-		<button class="btn-close exitModal float-end"></button>
-		<h5>항목 삭제</h5>
-		<div class="mb-3">
-			<label for="deleteId" class="form-label">관리번호</label>
-			<input type="text" id="deleteId" class="form-control">
-		</div>
-		<button id="showDeleteYN" class="btn btn-danger">삭제</button>
+		<button class="btn-close exitModal float-end" aria-label="모달 닫기"></button>
+		<h5 id="deleteModalTitle" class="mb-3">항목 삭제</h5>
+		<form id="deleteForm">
+			<div class="mb-3">
+				<label for="deleteId" class="form-label">관리번호</label>
+				<input type="text" id="deleteId" class="form-control">
+			</div>
+			<button id="showDeleteYN" class="btn btn-danger">삭제</button>
+		</form>
 	</div>
 </div>
 
 <!-- 삭제 확인 모달 -->
-<div class="modal YNmodal">
+<div class="modal YNmodal" role="dialog" aria-modal="true" tabindex="-1">
 	<div class="modal-content p-4 bg-light rounded shadow">
-		<button class="btn-close exitModal float-end"></button>
-		<h5>정말 삭제하시겠습니까?</h5>
-
+		<button class="btn-close exitModal float-end" aria-label="모달 닫기"></button>
+		<h5 class="mb-3">정말 삭제하시겠습니까?</h5>
 		<div class="d-flex justify-content-center gap-3">
 			<button id="deleteList" class="btn btn-danger w-25">예</button>
 <!--			<div class="flex-grow-1"></div>-->
@@ -97,9 +102,9 @@
 </div>
 
 <!-- 경고 모달 -->
-<div class="modal warningmodal">
+<div class="modal warningModal" role="dialog" aria-modal="true" tabindex="-1">
 	<div class="modal-content p-4 bg-warning rounded shadow">
-		<button class="btn-close exitModal float-end"></button>
+		<button class="btn-close exitModal float-end" aria-label="모달 닫기"></button>
 		<p class="fw-bold">입력값 확인 바랍니다.</p>
 	</div>
 </div>

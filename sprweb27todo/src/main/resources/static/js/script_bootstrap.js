@@ -3,11 +3,29 @@ window.onload = function () {
     document.querySelector("#addList").onclick = addList;
     document.querySelector("#updateList").onclick = updateList;
     document.querySelector("#deleteList").onclick = deleteList;
+    
+    // 모달 여백 클릭 시 모달창 닫히게
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.querySelectorAll("input").forEach((element) => {
+                    element.value = null;
+                });
+            }
+        });
+    });
 
     // 버튼 클릭 시 해당 기능 모달 출력
     document.querySelectorAll(".showModal").forEach((element, index) => {
         element.addEventListener("click", function () {
-            document.querySelectorAll(".modal")[index].style.display = "block";
+            // document.querySelectorAll(".modal")[index].style.display = "block";
+            const modal = document.querySelectorAll(".modal")[index];
+            modal.style.display = 'block';
+
+            // 첫 번째 input에 focus
+            const input = modal.querySelector("input, select, textarea");
+            if (input) input.focus();
         })
     });
 
@@ -129,7 +147,7 @@ function addList() {
             printList();
         })
         .catch(error => {
-            document.querySelector(".warningmodal").style.display = "block";
+            document.querySelector(".warningModal").style.display = "block";
             console.log("읽기 중 에러 : ", error);
         })
 }
@@ -168,7 +186,7 @@ function updateList() {
             printList();
         })
         .catch(error => {
-            document.querySelector(".warningmodal").style.display = "block";
+            document.querySelector(".warningModal").style.display = "block";
             console.log("읽기 중 에러 : ", error);
         })
 }
@@ -181,10 +199,6 @@ function deleteList() {
 
     fetch(`/data/${id}`, {
         method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: id
     })
         .then(response => {
             if(!response.ok){
